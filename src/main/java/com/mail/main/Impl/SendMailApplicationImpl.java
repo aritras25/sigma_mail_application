@@ -2,6 +2,8 @@ package com.mail.main.Impl;
 /* Author: Aritra Saha */
 
 import com.mail.main.Service.MailTextBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,16 +14,20 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Properties;
 
 @Component
 public class SendMailApplicationImpl {
-
+    private final static Logger log = LoggerFactory.getLogger(SendMailApplicationImpl.class);
     @Autowired
     MailTextBuilder mailTextBuilder;
 
     public String sendMail(List<String> toList, List<String> ccList, List<String> bccList){
+        log.info("starting send mail");
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = null;
         String host="smtpout.asia.secureserver.net";
         final String user="Sigma Consultants Pvt. Ltd<info@sigmacpl.com>";//change accordingly
         final String userId = "info@sigmacpl.com";
@@ -84,17 +90,20 @@ public class SendMailApplicationImpl {
 
             } catch (IOException e) {
                 e.printStackTrace();
+                log.info("Exception Happend for file attachment and file read : "+ e.getMessage());
                 return "Message Couldn't send";
             }
             message.setContent(multipart);
             //send the message
             Transport.send(message);
-
+            end = LocalDateTime.now();
             System.out.println("message sent successfully...");
         } catch (MessagingException e) {
             e.printStackTrace();
+            log.info("Exception Happend: "+ e.getMessage());
             return "Message Couldn't send";
         }
+        log.info("Time taken for sending mail : "+ (end.getSecond()-start.getSecond()));
         return "message sent successfully...";
     }
 }

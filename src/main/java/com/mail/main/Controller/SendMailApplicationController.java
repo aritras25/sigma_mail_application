@@ -2,6 +2,9 @@ package com.mail.main.Controller;
 /* Author: Aritra Saha */
 
 import com.mail.main.Impl.SendMailApplicationImpl;
+import org.apache.juli.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +14,7 @@ import java.util.*;
 
 @RestController
 public class SendMailApplicationController {
+    private final static Logger log = LoggerFactory.getLogger(SendMailApplicationController.class);
     @Autowired
     SendMailApplicationImpl mailApplicationImpl;
 
@@ -29,8 +33,9 @@ public class SendMailApplicationController {
         if(null != bccMailAddress && bccMailAddress.length() > 0)
             bccList = Arrays.asList(bccMailAddress.split(","));
 
+        log.info("before sending mail");
         String messageStatus = mailApplicationImpl.sendMail(toList, ccList, bccList);
-
+        log.info("message sent");
         return messageStatus;
     }
 }
