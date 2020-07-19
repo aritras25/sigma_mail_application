@@ -14,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Properties;
@@ -81,7 +82,8 @@ public class SendMailApplicationImpl {
             MimeBodyPart textPart = new MimeBodyPart();
             try{
 
-                File attachmentFile = new File(getClass().getClassLoader().getResource("SigmaBrochure.pdf").getFile());
+//                File attachmentFile = new File(getClass().getClassLoader().getResource("SigmaBrochure.pdf").getFile());
+                File attachmentFile = new File("src\\main\\resources\\SigmaBrochure.pdf");
                 System.out.println(attachmentFile.exists());
                 attachmentPart.attachFile(attachmentFile);
                 textPart.setText(mailTextBuilder.getMailText());
@@ -91,7 +93,7 @@ public class SendMailApplicationImpl {
             } catch (IOException e) {
                 e.printStackTrace();
                 log.info("Exception Happend for file attachment and file read : "+ e.getMessage());
-                return "Message Couldn't send";
+                return "Message Couldn't send: "+e.getMessage();
             }
             message.setContent(multipart);
             //send the message
@@ -101,7 +103,7 @@ public class SendMailApplicationImpl {
         } catch (MessagingException e) {
             e.printStackTrace();
             log.info("Exception Happend: "+ e.getMessage());
-            return "Message Couldn't send";
+            return "Message Couldn't send: "+ e.getMessage();
         }
         log.info("Time taken for sending mail : "+ (end.getSecond()-start.getSecond()));
         return "message sent successfully...";
