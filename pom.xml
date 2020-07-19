@@ -15,11 +15,11 @@
         <version>2.3.1.RELEASE</version>
     </parent>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.sun.mail</groupId>-->
-<!--            <artifactId>javax.mail</artifactId>-->
-<!--            <version>1.6.2</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.sun.mail</groupId>-->
+        <!--            <artifactId>javax.mail</artifactId>-->
+        <!--            <version>1.6.2</version>-->
+        <!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
         <dependency>
             <groupId>javax.mail</groupId>
@@ -44,11 +44,25 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.30</version>
         </dependency>
-            <dependency>
-                <groupId>com.microsoft.azure</groupId>
-                <artifactId>applicationinsights-logging-log4j2</artifactId>
-                <version>[2.0,)</version>
-            </dependency>
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-logging-log4j2</artifactId>
+            <version>[2.0,)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-web-auto</artifactId>
+            <!-- or applicationinsights-web for manual web filter registration -->
+            <!-- or applicationinsights-core for bare API -->
+            <version>2.5.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.azure/applicationinsights-core -->
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>applicationinsights-core</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
