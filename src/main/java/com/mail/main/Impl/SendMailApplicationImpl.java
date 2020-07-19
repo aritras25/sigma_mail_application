@@ -2,6 +2,7 @@ package com.mail.main.Impl;
 /* Author: Aritra Saha */
 
 import com.mail.main.Service.MailTextBuilder;
+import com.microsoft.applicationinsights.TelemetryConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class SendMailApplicationImpl {
     @Autowired
     MailTextBuilder mailTextBuilder;
 
+
     public String sendMail(List<String> toList, List<String> ccList, List<String> bccList){
         log.info("starting send mail");
         LocalDateTime start = LocalDateTime.now();
@@ -40,6 +42,13 @@ public class SendMailApplicationImpl {
         Properties props = new Properties();
         props.put("mail.smtp.host",host);
         props.put("mail.smtp.auth", "true");
+
+        String instrumentationKey = "a8abb3cb-25f2-4dde-83fc-4c15cbc224dd";
+
+        if (instrumentationKey != null)
+        {
+            TelemetryConfiguration.getActive().setInstrumentationKey(instrumentationKey);
+        }
 
         Session session = Session.getDefaultInstance(props,
                 new Authenticator() {
